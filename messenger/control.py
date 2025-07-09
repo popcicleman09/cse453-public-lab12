@@ -18,6 +18,7 @@ class Control(Enum):
 
 
 
+
 def securityConditionRead(assetControl: Control, subjectControl: Control):
     return subjectControl.value >= assetControl.value #only someone of higher security can read
 

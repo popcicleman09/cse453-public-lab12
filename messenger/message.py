@@ -7,7 +7,7 @@
 #    This class stores the notion of a message
 ########################################################################
 
-import control as Control
+import control
 
 ##################################################
 # MESSAGE
@@ -23,6 +23,7 @@ class Message:
     # Set a message to empty
     ##################################################
     def __init__(self):
+        self._control_level = control.Control.PUBLIC
         self._empty = True
         self._text = "Empty"
         self._author = ""
@@ -34,7 +35,8 @@ class Message:
     # MESSAGE NON-DEFAULT CONSTRUCTOR
     # Create a message and fill it
     ##################################################   
-    def __init__(self, text, author, date):
+    def __init__(self, text, author, date, control_level):
+        self._control_level = control_level
         self._text = text
         self._author = author
         self._date = date
@@ -57,7 +59,7 @@ class Message:
     def display_properties(self):
         if self._empty:
             return
-        print(f"\t[{self._id}] Message from {self._author} at {self._date}")
+        print(f"\t[{self._id}][{self._control_level.name}] Message from {self._author} at {self._date}")
 
     ##################################################
     # MESSAGE :: DISPLAY TEXT
