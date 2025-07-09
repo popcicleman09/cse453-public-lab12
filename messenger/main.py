@@ -2,7 +2,7 @@
 # Program:
 #    Lab 12, Bell-LaPadula
 # Author:
-#    Br. Helfrich, Kyle Mueller, <your name here if you made a change>
+#    Br. Helfrich, Kyle Mueller, Jack Deller
 # Summary: 
 #    This program is designed to keep track of a number of secret
 #    messages. IT will display messages to the appropriate users
@@ -57,6 +57,7 @@ def session(messages):
 
     interact_ = interact.Interact(username, password, messages)
     print(f"\nWelcome, {username}. Please select an option:\n")
+    print(f"You have: {interact_._control_level.name} Level of permissions\n") #Easy way to track what our perms are
     display_options()
 
     options = {

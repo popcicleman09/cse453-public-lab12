@@ -2,7 +2,7 @@
 # COMPONENT:
 #    INTERACT
 # Author:
-#    Br. Helfrich, Kyle Mueller, <your name here if you made a change>
+#    Br. Helfrich, Kyle Mueller, Jack Deller
 # Summary: 
 #    This class allows one user to interact with the system
 ########################################################################
@@ -14,16 +14,17 @@ import messages, control
 # User has a name and a password
 ###############################################################
 class User:
-    def __init__(self, name, password):
+    def __init__(self, name, password, control_level):
         self.name = name
         self.password = password
+        self.control_level = control_level
 
 userlist = [
-   [ "AdmiralAbe",     "password" ],  
-   [ "CaptainCharlie", "password" ], 
-   [ "SeamanSam",      "password" ],
-   [ "SeamanSue",      "password" ],
-   [ "SeamanSly",      "password" ]
+   [ "AdmiralAbe",     "password", control.Control.SECRET ],  
+   [ "CaptainCharlie", "password", control.Control.PRIVILEGED ], 
+   [ "SeamanSam",      "password", control.Control.CONFIDENTIAL ],
+   [ "SeamanSue",      "password", control.Control.CONFIDENTIAL ],
+   [ "SeamanSly",      "password", control.Control.CONFIDENTIAL ]
 ]
 
 ###############################################################
@@ -116,7 +117,12 @@ class Interact:
     ################################################## 
     def _authenticate(self, username, password):
         id_ = self._id_from_user(username)
-        return ID_INVALID != id_ and password == users[id_].password
+        if ID_INVALID != id_ and password == users[id_].password:
+            self._control_level = users[id_].control_level  # actual user's clearance
+            return True
+        else:
+            self._control_level = control.Control.PUBLIC  # fallback default
+            return False
 
     ##################################################
     # INTERACT :: ID FROM USER
